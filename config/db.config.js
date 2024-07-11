@@ -1,10 +1,10 @@
-require("dotenv").config();
-
+require("dotenv").config({ path: "../.env" });
+console.log(process.env.dialect);
 module.exports = {
-  HOST: "ep-noisy-resonance-a16sz79g-pooler.ap-southeast-1.aws.neon.tech",
-  USER: "default",
-  PASSWORD: "UcFsj1bZT3uV",
-  DB: "verceldb",
+  HOST: process.env.HOST,
+  USER: process.env.USER,
+  PASSWORD: process.env.PASSWORD,
+  DB: process.env.DB,
   dialect: "postgres",
   pool: {
     max: 5,
