@@ -21,7 +21,7 @@ const Restaurant = sequelize.define("Restaurant", {
   },
 });
 
-Restaurant.sync({ force: false })
+Restaurant.sync({ force: true })
   .then(() => {
     console.log("Table created or already exists");
   })
