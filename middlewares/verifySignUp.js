@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const Role = require("../models/role.model");
 const { where } = require("sequelize");
+const { Op } = require("sequelize");
 
 checkDuplicateUserNameOrEmail = async (req, res, next) => {
   //Check username
@@ -14,19 +15,17 @@ checkDuplicateUserNameOrEmail = async (req, res, next) => {
       return;
     }
     //Check email
-    user
-      .findOne({
-        where: {
-          email: req.body.email,
-        },
-      })
-      .then((user) => {
-        if (user) {
-          res.status(400).send({ message: "Failed! Email is already in use" });
-          return;
-        }
-        next();
-      });
+    User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    }).then((user) => {
+      if (user) {
+        res.status(400).send({ message: "Failed! Email is already in use" });
+        return;
+      }
+      next();
+    });
   });
 };
 
