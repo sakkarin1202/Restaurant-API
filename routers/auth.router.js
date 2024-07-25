@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/auth.controller");
-const { verifySignUp } = require("../middlewares");
+//const { verifySignUp } = require("../middlewares");
+const verifySignUp = require("../middlewares/verifySignUp");
 
+console.log(verifySignUp);
 router.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Headers",
@@ -13,7 +15,7 @@ router.use((req, res, next) => {
 
 router.post(
   "/signup",
-  [verifySignUp.checkDuplicateUserNameOrEmail, verifySignUp.checkRolesExisted],
+  [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted],
   authController.signup
 );
 

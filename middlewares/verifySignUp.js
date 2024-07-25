@@ -1,27 +1,29 @@
 const User = require("../models/user.model");
 const Role = require("../models/role.model");
-const { where } = require("sequelize");
 const { Op } = require("sequelize");
 
-checkDuplicateUserNameOrEmail = async (req, res, next) => {
-  //Check username
+checkDuplicateUsernameOrEmail = async (req, res, next) => {
+  //Check Username
   await User.findOne({
     where: {
       username: req.body.username,
     },
   }).then((user) => {
     if (user) {
-      res.status(400).send({ message: "Failed! Username is already in use" });
+      res.status(400).send({
+        message: "Failed! Username is already in use!",
+      });
       return;
     }
-    //Check email
     User.findOne({
       where: {
         email: req.body.email,
       },
     }).then((user) => {
       if (user) {
-        res.status(400).send({ message: "Failed! Email is already in use" });
+        res.status(400).send({
+          message: "Failed! Email is already in use!",
+        });
         return;
       }
       next();
@@ -29,18 +31,18 @@ checkDuplicateUserNameOrEmail = async (req, res, next) => {
   });
 };
 
-//Check Roles are vilid
+//Check roles are valid
 checkRolesExisted = async (req, res, next) => {
   if (req.body.roles) {
     Role.findAll({
       where: {
-        name: {
-          [Op.or]: req.body.roles,
-        },
+        name: { [Op.or]: req.body.roles },
       },
     }).then((roles) => {
       if (roles.length !== req.body.roles.length) {
-        res.status(400).send({ message: "Failed! Role does not exist" });
+        res.status(400).send({
+          message: "Failed! Role does not exist!",
+        });
         return;
       }
       next();
@@ -49,9 +51,10 @@ checkRolesExisted = async (req, res, next) => {
     next();
   }
 };
+
 const verifySignUp = {
-  checkRolesExisted,
-  checkDuplicateUserNameOrEmail,
+  checkRolesExisted:checkRolesExisted,
+  checkDuplicateUsernameOrEmail:checkDuplicateUsernameOrEmail,
 };
 
 module.exports = verifySignUp;
