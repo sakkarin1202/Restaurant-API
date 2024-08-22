@@ -12,10 +12,10 @@ const corsOption = {
   origin: "http://localhost:5173",
 };
 //dev mode
-db.sequelize.sync({ force: true }).then(() => {
-  initRole();
-  console.log("Drob and sync DB");
-});
+// db.sequelize.sync({ force: true }).then(() => {
+//   initRole();
+//   console.log("Drob and sync DB");
+// });
 
 const initRole = () => {
   role.create({ id: 1, name: "user" });

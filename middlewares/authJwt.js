@@ -4,8 +4,9 @@ const db = require("../models");
 const { use } = require("../routers/auth.router");
 const User = db.User;
 
+//localhost:5000/api/v1/auth/signup
 //verify token
-verifyToken = (req, res, next) => {
+http: verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
   //1st verify
   if (!token) {
